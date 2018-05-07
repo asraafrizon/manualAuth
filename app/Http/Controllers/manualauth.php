@@ -14,7 +14,10 @@ class manualauth extends Controller
 
     public function postLogin(Request $request)
     {
-    	dd('login ok');
+    	if (!auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->back();
+        }
+        return redirect()->route('home');
     }
 
     public function getRegister()
@@ -30,11 +33,21 @@ class manualauth extends Controller
     		'password' => 'required|min:6|confirmed' //field_confimation
     	]);
 
-    	User::create([
+    	$user = User::create([
     		'name' => $request->name,
     		'email' => $request->email,
     		'password' => bcrypt($request->password)
     	]);
-    	return redirect()->back();
+
+
+        auth()->LoginUsingId($user->id);
+    	return redirect()->route('home');
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return redirect()->route('login');
     }
 }

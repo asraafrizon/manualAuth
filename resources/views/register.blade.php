@@ -13,7 +13,7 @@
 </head>
 <body class="text-center">
 	<div class="container">
-	<form class="form-signin" method="POST" action=" {{ route('post.register') }} ">
+	<form class="form-signin" method="POST" action=" {{ route('register') }} ">
 		{{ csrf_field() }}
 		<h1 class="h3 mb-3 font-weight-normal">Register {{config('app.name')}} </h1>
 		<label for="inputUsername" class="sr-only">Username</label>
